@@ -1,112 +1,118 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#071018">
-  <meta name="description" content="ContraDrivers: prototipo 3D de carreras arcade con Switch continuo, Nitro rítmico, combate vehicular y Track Maker.">
-  <title>ContraDrivers v0.5.1</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#050a0f" />
+  <title>ContraDrivers Web v0.6.0</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="topbar">
-    <a class="brand" href="#top" aria-label="ContraDrivers inicio"><span class="brand-mark">CD</span><span>ContraDrivers</span></a>
-    <nav aria-label="Navegación principal">
-      <a href="#sistemas">Sistemas</a>
-      <a href="#pistas">Pistas</a>
-      <a href="#controles">Controles</a>
-      <a href="#maker">Track Maker</a>
-    </nav>
-    <a class="top-download" href="https://github.com/magalarza726-del/Contradrivers">Repositorio</a>
-  </header>
+  <div id="app">
+    <canvas id="gameCanvas"></canvas>
+    <div id="vignette"></div>
 
-  <main id="top">
-    <section class="hero section-shell">
-      <div class="hero-copy">
-        <p class="eyebrow">v0.5.1 · TRACK MAKER STUDIO</p>
-        <h1>Dos coches.<br><span>Una transformación continua.</span></h1>
-        <p class="lede">Carreras arcade 3D donde el vehículo existe como <strong>aX+bY</strong>: Switch, Nitro de tres niveles, Time Control, Embestida, rebufo y ritmo compiten por tu atención al mismo tiempo.</p>
-        <div class="hero-actions">
-          <a class="button primary" href="https://github.com/magalarza726-del/Contradrivers">Ver repositorio</a>
-          <a class="button ghost" href="#controles">Ver botones</a>
+    <section id="menu" class="screen active panel-screen">
+      <div class="hero-card">
+        <div class="eyebrow">CONTRADRIVERS WEB · v0.6.0</div>
+        <h1>CONTRA<span>DRIVERS</span></h1>
+        <p>Switch continuo, combate vehicular, Nitro rítmico y Track Maker. Jugable directamente en el navegador.</p>
+        <div class="menu-grid">
+          <button data-action="play" class="primary">CORRER</button>
+          <button data-action="garage">GARAJE</button>
+          <button data-action="maker">TRACK MAKER</button>
+          <button data-action="guide">GUÍA DE BOTONES</button>
         </div>
-        <p class="compat">Windows / Linux · Python + Ursina · Proyecto de escritorio</p>
+        <div class="small-note">Recomendado: teclado + navegador de escritorio con WebGL.</div>
       </div>
-      <div class="hero-visual" aria-label="Diagrama del Switch">
-        <div class="switch-card">
-          <div class="switch-head"><span>SWITCH VECTOR</span><span>a+b=1</span></div>
-          <div class="car-axis"><span>X</span><div class="axis"><i></i></div><span>Y</span></div>
-          <div class="blend-row"><span>a</span><b>0.37</b><div class="meter"><i style="width:37%"></i></div></div>
-          <div class="blend-row"><span>b</span><b>0.63</b><div class="meter alt"><i style="width:63%"></i></div></div>
-          <div class="equation">estado = 0.37X + 0.63Y</div>
+    </section>
+
+    <section id="garage" class="screen panel-screen">
+      <div class="garage-layout">
+        <div class="garage-preview-label"><span>SHOWROOM</span><strong id="garagePairTitle"></strong></div>
+        <aside class="garage-panel glass">
+          <div class="eyebrow">CONFIGURACIÓN DE PAREJA</div>
+          <h2>Garaje</h2>
+          <label>Vehículo X<select id="vehicleA"></select></label>
+          <label>Vehículo Y<select id="vehicleB"></select></label>
+          <div class="stat-table" id="garageStats"></div>
+          <label>Duración Switch<select id="switchDuration"><option>2</option><option>1.5</option><option selected>1</option><option>0.5</option></select></label>
+          <label>Cooldown<select id="switchCooldown"><option>0.1</option><option selected>0.3</option><option>0.5</option></select></label>
+          <div class="row"><button data-action="back">VOLVER</button><button data-action="play" class="primary">CORRER</button></div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="trackSelect" class="screen panel-screen">
+      <div class="track-select glass">
+        <div class="eyebrow">SELECCIÓN DE CIRCUITO</div>
+        <h2>¿Dónde quieres correr?</h2>
+        <div id="trackCards" class="track-cards"></div>
+        <div class="row"><button data-action="back">VOLVER</button><button id="startRace" class="primary">INICIAR CARRERA</button></div>
+      </div>
+    </section>
+
+    <section id="guide" class="screen panel-screen">
+      <div class="guide glass">
+        <div class="row between"><div><div class="eyebrow">REFERENCIA RÁPIDA</div><h2>Guía de botones</h2></div><button data-action="back">VOLVER</button></div>
+        <div class="guide-grid">
+          <article><h3>Conducción</h3><p><kbd>W</kbd> acelerar · <kbd>S</kbd> frenar/reversa</p><p><kbd>A</kbd>/<kbd>D</kbd> girar · <kbd>Espacio</kbd> freno de mano</p><p><kbd>C</kbd> cámara · <kbd>R</kbd> reaparecer</p></article>
+          <article><h3>Switch & combate</h3><p><kbd>E</kbd> Switch X↔Y</p><p><kbd>Q</kbd> Time Control</p><p><kbd>Alt</kbd> mantener para cargar Embestida; soltar para atacar</p></article>
+          <article><h3>Nitro rítmico</h3><p><kbd>N</kbd> Nitro Base · <kbd>M</kbd> Remix Nitro</p><p><kbd>J</kbd><kbd>K</kbd><kbd>L</kbd><kbd>I</kbd> notas rítmicas</p><p>La Sequence A llena N1→N2. Remix abre Sequence B y el Turbo N3 se activa automáticamente.</p></article>
+          <article><h3>Track Maker</h3><p>Rueda: zoom · botón medio: desplazar</p><p><kbd>1</kbd> Seleccionar · <kbd>2</kbd> Trazado · <kbd>3</kbd> Checkpoint · <kbd>4</kbd> Rampa · <kbd>5</kbd> Túnel · <kbd>6</kbd> Borrar</p><p><kbd>Ctrl+Z</kbd>/<kbd>Ctrl+Y</kbd> Undo/Redo · <kbd>Delete</kbd> borrar seleccionado</p></article>
         </div>
-        <div class="telemetry-grid">
-          <div><small>N1 BASE</small><strong>78%</strong></div>
-          <div><small>N2 REMIX</small><strong>42%</strong></div>
-          <div><small>N3 TURBO</small><strong>16%</strong></div>
-          <div><small>TIME</small><strong>3.8s</strong></div>
-        </div>
       </div>
     </section>
 
-    <section id="sistemas" class="section-shell block">
-      <div class="section-heading"><p class="eyebrow">GAMEPLAY</p><h2>Un sistema, no una colección de botones</h2><p>Cada recurso tiene una función distinta y todos dependen del coche —o de la mezcla de coches— que estés usando.</p></div>
-      <div class="feature-grid">
-        <article><span class="num">01</span><h3>Switch aX+bY</h3><p>Interpolación Smoothstep de física, masa, control, daño, Nitro, Time Control y Embestida. Duración y cooldown configurables.</p></article>
-        <article><span class="num">02</span><h3>Nitro rítmico</h3><p>Base → Remix → Turbo. Sequence A pertenece a la pista; Sequence B usa la música seleccionada por el jugador.</p></article>
-        <article><span class="num">03</span><h3>Combate vehicular</h3><p>Resistencia y Robustez entran en colisiones junto con masa, velocidad relativa, ángulo y carga de Embestida.</p></article>
-        <article><span class="num">04</span><h3>Time Control</h3><p>Cámara lenta real del mundo, más control y frenada; la reserva depende del coche activo y se mezcla durante Switch.</p></article>
-        <article><span class="num">05</span><h3>Rebufo físico</h3><p>Solo aparece si estás detrás, cerca y alineado. Entrega un empuje moderado y energía de Nitro Base.</p></article>
-        <article><span class="num">06</span><h3>Track Maker</h3><p>Editor desplazable con spline, elevación, carreteras, superficies, túneles, rampas, atajos, objetos, undo/redo y playtest instantáneo.</p></article>
-      </div>
+    <section id="maker" class="screen maker-screen">
+      <canvas id="makerCanvas"></canvas>
+      <header class="maker-top glass">
+        <strong>CONTRADRIVERS TRACK MAKER</strong>
+        <span id="makerStatus">Listo</span>
+        <button id="makerPlay" class="primary">PROBAR</button>
+        <button id="makerSave">GUARDAR</button>
+        <button id="makerExport">EXPORTAR</button>
+        <button data-action="back">SALIR</button>
+      </header>
+      <aside class="maker-tools glass">
+        <button data-tool="select" class="active">1 · SELECCIONAR</button>
+        <button data-tool="draw">2 · TRAZADO</button>
+        <button data-tool="checkpoint">3 · CHECKPOINT</button>
+        <button data-tool="ramp">4 · RAMPA</button>
+        <button data-tool="tunnel">5 · TÚNEL</button>
+        <button data-tool="delete">6 · BORRAR</button>
+        <hr />
+        <button id="makerUndo">UNDO</button><button id="makerRedo">REDO</button>
+        <label>Ancho<input id="makerWidth" type="range" min="8" max="22" step="0.5" value="14"></label>
+        <label>Elevación<input id="makerElevation" type="range" min="-5" max="30" step="0.5" value="0"></label>
+        <button id="makerNew">NUEVA PISTA</button>
+        <button id="makerLoad">CARGAR ÚLTIMA</button>
+        <p class="mini">Arrastra nodos. Rueda = zoom. Botón medio = pan. El circuito se cierra automáticamente.</p>
+      </aside>
     </section>
 
-    <section id="pistas" class="section-shell block">
-      <div class="section-heading"><p class="eyebrow">ROAD NETWORKS</p><h2>Tres trazados con jerarquía vial</h2><p>Las rutas usan spline y perfiles de carretera en lugar de bloques rectangulares pegados.</p></div>
-      <div class="track-grid">
-        <article class="track-card"><div class="track-art san-vela" aria-label="Vista estilizada de Circuito San Vela"></div><div><small>COLINAS + WATERFRONT</small><h3>Circuito San Vela</h3><p>Rasantes, cambios de elevación y shortcuts urbanos.</p></div></article>
-        <article class="track-card"><div class="track-art rockfall" aria-label="Vista estilizada de Persecución Rockfall"></div><div><small>RING ROAD + INDUSTRIAL</small><h3>Persecución Rockfall</h3><p>Circunvalación, túneles y rutas de persecución.</p></div></article>
-        <article class="track-card"><div class="track-art eclipse" aria-label="Vista estilizada de Enlace Bahía Eclipse"></div><div><small>INTERSTATE + PORT</small><h3>Enlace Bahía Eclipse</h3><p>Interestatal, puerto, intercambiadores y conectores secundarios.</p></div></article>
+    <section id="raceHud" class="screen race-screen">
+      <div class="hud-top-left"><div id="positionText">1/6</div><div id="lapText">VUELTA 1/3</div><div id="timeText">00:00.00</div></div>
+      <div class="hud-top-center"><div id="directionArrow">▲</div><div id="trackNameHud"></div></div>
+      <div class="hud-top-right"><canvas id="minimap" width="220" height="160"></canvas></div>
+      <div class="hud-bottom-left glass compact"><div>TIME</div><div class="meter"><i id="timeBar"></i></div><div>RAM</div><div class="meter"><i id="ramBar"></i></div><small>Q Time · Alt Embestida</small></div>
+      <div class="hud-bottom-center">
+        <div id="switchText"></div><div id="speedText">000 <small>km/h</small></div>
+        <div class="nitro-row"><span>N1</span><div class="meter"><i id="n1"></i></div></div>
+        <div class="nitro-row"><span>N2</span><div class="meter"><i id="n2"></i></div></div>
+        <div class="nitro-row"><span>N3</span><div class="meter"><i id="n3"></i></div></div>
       </div>
+      <div class="hud-bottom-right"><div class="health meter"><i id="healthBar"></i></div><div id="statusText"></div><small>H guía · Esc pausa</small></div>
+      <div id="rhythmPanel" class="rhythm-panel glass"><div class="rhythm-title">TRACK SEQUENCE A</div><div id="rhythmLanes" class="rhythm-lanes"></div><div class="rhythm-keys"><kbd>J</kbd><kbd>K</kbd><kbd>L</kbd><kbd>I</kbd></div><div id="rhythmJudge"></div></div>
+      <div id="countdown"></div>
     </section>
 
-    <section id="controles" class="section-shell block controls-section">
-      <div class="section-heading"><p class="eyebrow">BUTTON GUIDE</p><h2>Guía completa de botones</h2><p>La misma referencia vive dentro del juego. En carrera pulsa <kbd>H</kbd>; en Track Maker también.</p></div>
-      <div id="control-tabs" class="control-tabs" role="tablist" aria-label="Categorías de controles"></div>
-      <div id="control-grid" class="control-grid" aria-live="polite"></div>
-      <p id="control-tip" class="control-tip"></p>
-      <noscript><p>Activa JavaScript para visualizar la guía interactiva. El archivo <code>data/button-guide.json</code> contiene la referencia completa.</p></noscript>
-    </section>
+    <section id="pause" class="screen panel-screen"><div class="pause-card glass"><h2>PAUSA</h2><button data-action="resume" class="primary">CONTINUAR</button><button data-action="guide">GUÍA</button><button data-action="maker">TRACK MAKER</button><button data-action="menu">MENÚ PRINCIPAL</button></div></section>
+    <section id="result" class="screen panel-screen"><div class="pause-card glass"><div class="eyebrow">CARRERA TERMINADA</div><h2 id="resultTitle">META</h2><p id="resultText"></p><button data-action="play" class="primary">OTRA CARRERA</button><button data-action="menu">MENÚ</button></div></section>
 
-    <section id="maker" class="section-shell maker block">
-      <div>
-        <p class="eyebrow">CREATE → VALIDATE → RACE</p>
-        <h2>Track Maker tipo “maker”, pero pensado para carreteras</h2>
-        <p>WASD desplaza el lienzo, la rueda hace zoom, puedes arrastrar nodos, cambiar elevación, dibujar shortcuts y probar el borrador sin guardarlo.</p>
-        <div class="maker-pills"><span>100 Undo/Redo</span><span>1–6 carriles</span><span>5 superficies</span><span>9 escenarios</span><span>Playtest instantáneo</span></div>
-      </div>
-      <div class="maker-terminal" aria-label="Flujo del Track Maker">
-        <pre><span>1</span> TRAZADO
-<span>2</span> CHECKPOINTS
-<span>3</span> PERFIL VIAL
-<span>4</span> RAMPAS / TUNELES
-<span>5</span> ATAJOS
-<span>6</span> VALIDAR
-<span>7</span> PROBAR</pre>
-      </div>
-    </section>
-
-    <section class="section-shell download block">
-      <div>
-        <p class="eyebrow">DESKTOP BUILD</p>
-        <h2>El sitio vive en GitHub Pages.<br>El juego corre en tu PC.</h2>
-        <p>GitHub Pages publica esta documentación. El juego completo de escritorio continúa siendo un proyecto Python/Ursina y no se ejecuta directamente en Pages. El repositorio queda preparado para alojar también el código y builds de escritorio en futuras actualizaciones.</p>
-      </div>
-      <a class="button primary big" href="https://github.com/magalarza726-del/Contradrivers">Abrir repositorio</a>
-    </section>
-  </main>
-
-  <footer class="section-shell"><span>ContraDrivers v0.5.1</span><span>Prototipo técnico · arte procedural · 70/70 pruebas</span></footer>
-  <script src="app.js" defer></script>
+    <div id="toast"></div>
+    <div id="fatal" hidden><h2>WebGL no pudo iniciar</h2><p id="fatalText"></p></div>
+  </div>
+  <script type="module" src="app.js"></script>
 </body>
 </html>
