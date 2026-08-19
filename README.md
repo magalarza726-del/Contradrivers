@@ -1,17 +1,13 @@
-# ContraDrivers — GitHub Pages Ready v0.5.1
+# ContraDrivers — GitHub Pages v0.5.1
 
-Esta carpeta está preparada para publicarse como sitio estático de GitHub Pages. Contiene la presentación del proyecto, la guía interactiva de botones, imágenes de las pistas y el ZIP del proyecto de escritorio.
+Sitio oficial estático de ContraDrivers. Presenta los sistemas principales, las tres pistas, Track Maker y la guía interactiva de controles.
 
-## Publicar
+## Publicación
 
-1. Crea un repositorio nuevo en GitHub.
-2. Sube **el contenido de esta carpeta** a la rama `main`.
-3. En **Settings → Pages**, selecciona **GitHub Actions** como origen de publicación si GitHub todavía no lo ha activado para el repositorio.
-4. Abre la pestaña **Actions** y espera a que termine `Deploy ContraDrivers to GitHub Pages`.
-5. La URL publicada aparecerá en el deployment `github-pages` y en Settings → Pages.
+El repositorio incluye `.github/workflows/deploy-pages.yml`, preparado para desplegar la raíz del repositorio mediante GitHub Actions.
 
-El workflow usa las acciones oficiales actuales `actions/checkout@v6`, `actions/configure-pages@v5`, `actions/upload-pages-artifact@v4` y `actions/deploy-pages@v4`.
+Para la primera publicación, GitHub exige habilitar una vez **Settings → Pages → Source → GitHub Actions**. Después, cada actualización enviada a `main` desplegará el sitio automáticamente.
 
 ## Importante
 
-GitHub Pages no ejecuta el juego Ursina/Python. El sitio permite **descargar** `downloads/ContraDrivers_v0.5.1_Desktop_Source.zip`; el juego se ejecuta localmente con Python.
+El juego completo de escritorio utiliza Python + Ursina y no se ejecuta directamente dentro de GitHub Pages. Este repositorio está actualmente preparado como sitio web del proyecto y base pública para futuras builds/código de escritorio.
