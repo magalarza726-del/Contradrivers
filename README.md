@@ -1,13 +1,35 @@
-# ContraDrivers — GitHub Pages v0.5.1
+# ContraDrivers Web v0.6.0
 
-Sitio oficial estático de ContraDrivers. Presenta los sistemas principales, las tres pistas, Track Maker y la guía interactiva de controles.
+Versión **jugable directamente en GitHub Pages** de ContraDrivers. El runtime fue portado de Python/Ursina a JavaScript + WebGL para que la URL publicada abra el juego, no una página de descarga.
+
+## Jugar
+
+Una vez desplegado GitHub Pages, abre:
+
+`https://magalarza726-del.github.io/Contradrivers/`
+
+## Incluye
+
+- Carrera 3D WebGL con tres circuitos.
+- Switch continuo `aX+bY` con transición Smoothstep, duración y cooldown configurables.
+- Garaje y selección de pareja de vehículos.
+- Time Control.
+- Embestida de carga y liberación.
+- Rebufo.
+- Nitro Base, Remix y Turbo.
+- Sequence A / Sequence B con cuatro carriles rítmicos.
+- Cinco rivales controlados por IA.
+- Daño, resistencia y robustez.
+- Rampas, túneles, atajos, elevación y distintos perfiles de carretera.
+- HUD, minimapa, cámara y guía de controles.
+- Track Maker web con pan, zoom, nodos arrastrables, elevación, checkpoints, rampas, túneles, Undo/Redo, guardado local, exportación JSON y playtest inmediato.
 
 ## Publicación
 
-El repositorio incluye `.github/workflows/deploy-pages.yml`, preparado para desplegar la raíz del repositorio mediante GitHub Actions.
+`.github/workflows/deploy-pages.yml` despliega la raíz del repositorio a GitHub Pages con cada push a `main`.
 
-Para la primera publicación, GitHub exige habilitar una vez **Settings → Pages → Source → GitHub Actions**. Después, cada actualización enviada a `main` desplegará el sitio automáticamente.
+La aplicación usa Three.js como motor WebGL cargado desde jsDelivr. Los datos de vehículos, balance y circuitos están contenidos en `game-data.js`.
 
-## Importante
+## Versión de escritorio
 
-El juego completo de escritorio utiliza Python + Ursina y no se ejecuta directamente dentro de GitHub Pages. Este repositorio está actualmente preparado como sitio web del proyecto y base pública para futuras builds/código de escritorio.
+La edición Python/Ursina sigue existiendo como referencia de diseño y prototipo de escritorio, pero **esta rama web no necesita Python para jugar**.
