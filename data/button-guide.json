@@ -1,0 +1,102 @@
+{
+  "quick_hint": "H · GUIA DE BOTONES",
+  "pages": [
+    {
+      "id": "race",
+      "title": "CARRERA",
+      "subtitle": "Conduccion, Switch y acciones esenciales",
+      "entries": [
+        {"key": "W", "action": "Acelerar", "note": "Mantener para ganar velocidad."},
+        {"key": "S", "action": "Frenar / reversa", "note": "Freno de pie; no sustituye al freno de mano."},
+        {"key": "A / D", "action": "Girar", "note": "Direccion izquierda / derecha."},
+        {"key": "ESPACIO", "action": "Freno de mano", "note": "Facilita derrapes y rotacion agresiva."},
+        {"key": "SHIFT IZQ.", "action": "Switch", "note": "Transforma suavemente X en Y mediante aX+bY."},
+        {"key": "E", "action": "Habilidad del coche", "note": "Activa la habilidad propia del vehiculo actual."},
+        {"key": "Q", "action": "Time Control", "note": "Camara lenta global + gran aumento de control."},
+        {"key": "ALT IZQ.", "action": "Embestida", "note": "Mantener para cargar; soltar para lanzar el golpe."},
+        {"key": "R", "action": "Reaparecer", "note": "Devuelve el coche a pista con penalizacion de tiempo."},
+        {"key": "C", "action": "Cambiar camara", "note": "Alterna las vistas disponibles."},
+        {"key": "ESC", "action": "Pausa", "note": "Abre el menu de pausa."},
+        {"key": "H", "action": "Guia de botones", "note": "Pausa y abre esta referencia durante la carrera."}
+      ],
+      "tip": "El freno de mano, Time Control y Embestida son sistemas diferentes. Combinalos segun la curva, el trafico y el vehiculo activo."
+    },
+    {
+      "id": "nitro",
+      "title": "NITRO + RHYTHM",
+      "subtitle": "Escalera Base → Remix → Turbo",
+      "entries": [
+        {"key": "N", "action": "Nitro Base", "note": "Mantener para consumir N1 cuando haya carga."},
+        {"key": "M", "action": "Remix Nitro", "note": "Activa N2 y dispara la Sequence B."},
+        {"key": "J", "action": "Rhythm carril 1", "note": "Pulsa al cruzar la zona de juicio."},
+        {"key": "K", "action": "Rhythm carril 2", "note": "Sequence A carga N1 y luego N2."},
+        {"key": "L", "action": "Rhythm carril 3", "note": "Sequence B carga exclusivamente N3."},
+        {"key": ";", "action": "Rhythm carril 4", "note": "Los acordes pueden exigir varios carriles."},
+        {"key": "REBUFO", "action": "Recarga pasiva N1", "note": "Mantente detras y alineado con otro coche."},
+        {"key": "RAMPAS", "action": "Recarga pasiva N1", "note": "Saltos y acrobacias entregan una pequeña recompensa."},
+        {"key": "TUNELES", "action": "Recarga pasiva N1", "note": "La conduccion dentro del tunel regenera ligeramente."},
+        {"key": "AUTO", "action": "Turbo Nitro", "note": "N3 se activa automaticamente al terminar Sequence B."}
+      ],
+      "tip": "No necesitas completar N1 para usarlo. La energia rítmica que sobra cuando N1 esta lleno progresa hacia Remix."
+    },
+    {
+      "id": "maker",
+      "title": "TRACK MAKER",
+      "subtitle": "Construccion, navegacion y prueba inmediata",
+      "entries": [
+        {"key": "1–0", "action": "Herramientas", "note": "Seleccion, trazado, checkpoint, rampa, obstaculo, tunel, atajo, escenario, carretera y borrar."},
+        {"key": "WASD / FLECHAS", "action": "Desplazar mapa", "note": "Recorre pistas de cualquier tamaño."},
+        {"key": "BOTON CENTRAL", "action": "Mano / pan", "note": "Arrastra el lienzo directamente."},
+        {"key": "RUEDA", "action": "Zoom", "note": "Zoom anclado al punto bajo el cursor."},
+        {"key": "HOME", "action": "Encuadrar pista", "note": "Muestra ruta principal y atajos."},
+        {"key": "G", "action": "Cambiar snap", "note": "1 → 2 → 5 → 10 unidades."},
+        {"key": "R / PGUP", "action": "Elevar nodo", "note": "Crea colinas, puentes y rasantes."},
+        {"key": "F / PGDN", "action": "Bajar nodo", "note": "Reduce la elevacion del nodo seleccionado."},
+        {"key": "CTRL+Z / CTRL+Y", "action": "Deshacer / rehacer", "note": "Hasta 100 estados."},
+        {"key": "CTRL+S", "action": "Guardar", "note": "Escribe en data/custom_tracks.json."},
+        {"key": "F2", "action": "Renombrar pista", "note": "Edita el nombre del documento actual."},
+        {"key": "H", "action": "Guia de botones", "note": "Abre esta pagina sin perder el borrador."}
+      ],
+      "tip": "PROBAR ejecuta el borrador sin obligarte a guardar. Desde pausa puedes regresar al Maker conservando exactamente el estado de edicion."
+    },
+    {
+      "id": "developer",
+      "title": "DESARROLLO",
+      "subtitle": "Herramientas de diagnostico y balance",
+      "entries": [
+        {"key": "F1", "action": "Invulnerabilidad", "note": "Activa/desactiva daño al jugador."},
+        {"key": "F2", "action": "IA", "note": "Activa/desactiva los bots durante carrera."},
+        {"key": "F3 / F4", "action": "Añadir / quitar bot", "note": "Modifica la parrilla en runtime."},
+        {"key": "F5", "action": "Hitboxes", "note": "Muestra/oculta depuracion de colisiones."},
+        {"key": "F6", "action": "Fuerzas", "note": "Muestra/oculta vectores visuales."},
+        {"key": "F7", "action": "FPS", "note": "Alterna el contador de rendimiento."},
+        {"key": "F8", "action": "Recargar JSON", "note": "Recarga configuracion y reconstruye el catalogo de coches."},
+        {"key": "F9", "action": "Siguiente checkpoint", "note": "Teletransporte de QA."},
+        {"key": "F10", "action": "Panel tecnico", "note": "Muestra telemetria de desarrollo."},
+        {"key": "T", "action": "Reiniciar carrera", "note": "Reinicia inmediatamente."},
+        {"key": "[ / ]", "action": "Duracion Switch", "note": "Ajuste rapido de balance."},
+        {"key": "- / =  , / .", "action": "Balance dinamico", "note": "Conservacion de velocidad y multiplicador de punta."}
+      ],
+      "tip": "Estas teclas son herramientas de desarrollo. La Guia separa deliberadamente los controles del jugador de los controles de QA."
+    },
+    {
+      "id": "gamepad",
+      "title": "MANDO",
+      "subtitle": "Mapeo de referencia para carrera",
+      "entries": [
+        {"key": "RT", "action": "Acelerar", "note": "Gatillo derecho."},
+        {"key": "LT", "action": "Frenar", "note": "Gatillo izquierdo."},
+        {"key": "STICK IZQ.", "action": "Direccion", "note": "Control analogico."},
+        {"key": "A", "action": "Freno de mano", "note": "Derrape / rotacion."},
+        {"key": "Y", "action": "Switch", "note": "Transformacion A ↔ B."},
+        {"key": "X", "action": "Habilidad", "note": "Habilidad propia del coche."},
+        {"key": "LB", "action": "Time Control", "note": "Reserva temporal del vehiculo."},
+        {"key": "RB", "action": "Embestida", "note": "Mantener / soltar."},
+        {"key": "B", "action": "Nitro Base", "note": "Consume N1."},
+        {"key": "DPAD ARRIBA", "action": "Remix Nitro", "note": "Activa N2."},
+        {"key": "START", "action": "Pausa", "note": "Abre el menu de pausa."}
+      ],
+      "tip": "El juego conserva teclado para las cuatro notas Rhythm (J/K/L/;). El mapeo rítmico de mando queda reservado para una iteracion posterior."
+    }
+  ]
+}
