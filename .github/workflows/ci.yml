@@ -19,8 +19,10 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 22
-      - name: Syntax check app
+      - name: Syntax check legacy app
         run: node --check app.js
+      - name: Syntax check open-world app
+        run: node --check openworld-app.js
       - name: Syntax check runtime modules
         run: find src -name '*.js' -print0 | xargs -0 -n1 node --check
       - name: Static contracts
