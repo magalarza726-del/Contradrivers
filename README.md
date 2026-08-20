@@ -1,35 +1,24 @@
-# ContraDrivers Web v0.6.0
+# ContraDrivers Web v0.7.0 — AAA Vertical Slice
 
-Versión **jugable directamente en GitHub Pages** de ContraDrivers. El runtime fue portado de Python/Ursina a JavaScript + WebGL para que la URL publicada abra el juego, no una página de descarga.
+Playable WebGL racing prototype built for GitHub Pages.
 
-## Jugar
+## Core systems
+- Continuous `aX+bY` vehicle Switch with Smoothstep morphing.
+- Fixed-step action handling at 120 Hz under a 60 FPS render target.
+- Speed-dependent steering, drift/handbrake, off-road grip, Heroic Assist.
+- Traffic Director with near misses and same-direction traffic checking.
+- Police Heat / pursuit escalation with roadblocks.
+- 3-level Nitro + Rhythm Drive.
+- Time Control and charge/release Ram.
+- Aggressive AI rivals and takedowns.
+- Speed-reactive cinematic camera.
+- Track Maker with pan, zoom, elevation, ramps, tunnels, checkpoints, undo/redo, local save and playtest.
+- Procedural/instanced scenery for a lightweight Pages build.
 
-Una vez desplegado GitHub Pages, abre:
+## Run
+Serve the repository over HTTP (GitHub Pages does this automatically). `index.html` is the entry point.
 
-`https://magalarza726-del.github.io/Contradrivers/`
+## Research
+See `docs/AAA_DESIGN_RESEARCH.md` for the public development/design references and how their lessons were translated into original ContraDrivers systems.
 
-## Incluye
-
-- Carrera 3D WebGL con tres circuitos.
-- Switch continuo `aX+bY` con transición Smoothstep, duración y cooldown configurables.
-- Garaje y selección de pareja de vehículos.
-- Time Control.
-- Embestida de carga y liberación.
-- Rebufo.
-- Nitro Base, Remix y Turbo.
-- Sequence A / Sequence B con cuatro carriles rítmicos.
-- Cinco rivales controlados por IA.
-- Daño, resistencia y robustez.
-- Rampas, túneles, atajos, elevación y distintos perfiles de carretera.
-- HUD, minimapa, cámara y guía de controles.
-- Track Maker web con pan, zoom, nodos arrastrables, elevación, checkpoints, rampas, túneles, Undo/Redo, guardado local, exportación JSON y playtest inmediato.
-
-## Publicación
-
-`.github/workflows/deploy-pages.yml` despliega la raíz del repositorio a GitHub Pages con cada push a `main`.
-
-La aplicación usa Three.js como motor WebGL cargado desde jsDelivr. Los datos de vehículos, balance y circuitos están contenidos en `game-data.js`.
-
-## Versión de escritorio
-
-La edición Python/Ursina sigue existiendo como referencia de diseño y prototipo de escritorio, pero **esta rama web no necesita Python para jugar**.
+No proprietary assets or code from referenced games are included.
