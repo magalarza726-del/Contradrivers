@@ -1,12 +1,10 @@
 export const AAA={
-  version:'0.7.1',
+  version:'0.8.0',
   target_fps:60,
   fixed_step:1/120,
   max_substeps:5,
   handling:{
-    // The track coordinates are authored for readable arcade layouts, not literal SI metres.
-    // Keeping displayed speed and world displacement separate avoids 300–400 km/h cars
-    // crossing an entire district in a few seconds.
+    // Legacy closed-track runtime uses compressed authored coordinates.
     motion_scale:.28,
     steering_sign:-1,
     ride_height:.065,
@@ -16,6 +14,16 @@ export const AAA={
     handbrake_grip:.34,
     offroad_drag:.56,
     wall_scrub:.78
+  },
+  open_world:{
+    extent_m:4000,
+    area_km2:64,
+    chunk_size_m:500,
+    stream_radius_chunks:2,
+    road_length_target_km:350,
+    traffic_pool:56,
+    activities:12,
+    scale:'1 world unit = 1 metre'
   },
   camera:{
     base_fov:64,
