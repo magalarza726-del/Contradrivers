@@ -44,7 +44,7 @@ export class AudioEngine{
     this.nitroOsc=c.createOscillator();this.nitroGain=c.createGain();this.nitroOsc.type='triangle';this.nitroGain.gain.value=.0001;this.nitroOsc.connect(this.nitroGain).connect(c.destination);this.nitroOsc.start();
   }
   update(speedKmh,throttle,nitro,dt){if(!this.ctx)return;const now=this.ctx.currentTime;const rpm=55+Math.pow(clamp(speedKmh/420,0,1),.72)*210+throttle*45;this.engineOsc.frequency.setTargetAtTime(rpm,now,.03);this.engineGain.gain.setTargetAtTime((.025+.055*throttle)*this.master,now,.04);this.nitroOsc.frequency.setTargetAtTime(380+nitro*300,now,.03);this.nitroGain.gain.setTargetAtTime((nitro>.01?.045*nitro:0.0001)*this.master,now,.03);this.lastBeat-=dt;if(this.lastBeat<=0&&speedKmh>20){this.lastBeat=.24-.08*clamp(speedKmh/400,0,1);this.beep(70+speedKmh*.14,.025,'square',.03)}}
-  beep(freq=440,dur=.08,type='sine',gain=.08){if(!this.ctx)return;const o=this.ctx.createOscillator(),g=this.ctx.createGain(),now=this.ctx.currentTime;o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(gain*this.master,now);g.gain.exponentialRampToValueAtTime(.0001,now+dur);o.connect(g).connect(c.destination);o.start(now);o.stop(now+dur)}
+  beep(freq=440,dur=.08,type='sine',gain=.08){if(!this.ctx)return;const o=this.ctx.createOscillator(),g=this.ctx.createGain(),now=this.ctx.currentTime;o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(gain*this.master,now);g.gain.exponentialRampToValueAtTime(.0001,now+dur);o.connect(g).connect(this.ctx.destination);o.start(now);o.stop(now+dur)}
   impact(intensity=.5){this.beep(58+intensity*40,.11,'square',.22*intensity)}
   rhythm(ok=true){this.beep(ok?680:180,ok?.05:.09,ok?'sine':'sawtooth',ok?.12:.08)}
 }
