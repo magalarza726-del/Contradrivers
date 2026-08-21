@@ -23,12 +23,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+      - name: Build audited static artifact
+        run: |
+          mkdir -p dist/src
+          cp index.html styles.css styles-v082.css game-data.js game.js .nojekyll dist/
+          cp src/core.js src/vehicle.js src/directors.js src/openworld.js src/settings.js src/vehicle-factory.js src/openworld-ui.js src/openworld-runtime.js dist/src/
       - name: Configure Pages
         uses: actions/configure-pages@v5
-      - name: Upload static site
+      - name: Upload production site only
         uses: actions/upload-pages-artifact@v4
         with:
-          path: .
+          path: dist
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
