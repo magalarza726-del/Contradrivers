@@ -23,7 +23,7 @@ class SettingsStore extends EventTarget{
   constructor(){super();this.value=load();this.persist()}
   persist(){try{localStorage.setItem(CURRENT_KEY,JSON.stringify(this.value))}catch{}}
   get(key){return this.value[key]}
-  set(key,value){const next=sanitize({...this.value,[key]:value});const changed=next[key]!==this.value[key];this.value=next;this.persist();if(changed)this.dispatchEvent(new CustomEvent('change',{detail:{key,value:next[key],settings:{...next}}}));return next[key]}
+  set(key,value){const next=sanitize({...this.value,[key]:value});const changed=next[key]!==this.value[key];if(!changed)return this.value[key];this.value=next;this.persist();this.dispatchEvent(new CustomEvent('change',{detail:{key,value:next[key],settings:{...next}}}));return next[key]}
   togglePolice(){return this.set('policeEnabled',!this.value.policeEnabled)}
   snapshot(){return {...this.value}}
 }
