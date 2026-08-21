@@ -16,20 +16,14 @@ export const CAR_DESIGNS=Object.freeze({
 
 const fallback={type:'sedan',w:1.85,h:1.45,l:4.35,wheel:.34};
 export const designFor=v=>CAR_DESIGNS[v?.id]||fallback;
-
-const shared={
-  box:new THREE.BoxGeometry(1,1,1),
-  sphere:new THREE.SphereGeometry(1,18,10),
-};
+const shared={box:new THREE.BoxGeometry(1,1,1),sphere:new THREE.SphereGeometry(1,18,10)};
 for(const g of Object.values(shared))g.userData.shared=true;
 const wheelGeoCache=new Map();
 function wheelGeometry(radius,width,segments=16){const key=`${radius.toFixed(3)}:${width.toFixed(3)}:${segments}`;if(!wheelGeoCache.has(key)){const g=new THREE.CylinderGeometry(radius,radius,width,segments);g.userData.shared=true;wheelGeoCache.set(key,g)}return wheelGeoCache.get(key)}
-
 const paint=color=>new THREE.MeshPhysicalMaterial({color,metalness:.62,roughness:.25,clearcoat:.88,clearcoatRoughness:.14});
 const dark=()=>new THREE.MeshStandardMaterial({color:0x07090b,metalness:.62,roughness:.29});
 const glass=()=>new THREE.MeshPhysicalMaterial({color:0x07131d,metalness:.15,roughness:.07,transparent:true,opacity:.78,clearcoat:1,clearcoatRoughness:.04});
 const light=color=>new THREE.MeshBasicMaterial({color,toneMapped:false});
-
 function box(group,name,size,pos,material,{rot=[0,0,0],painted=false}={}){const m=new THREE.Mesh(shared.box,material);m.name=name||'';m.scale.set(...size);m.position.set(...pos);m.rotation.set(...rot);m.userData.paint=painted;group.add(m);return m}
 function sphere(group,name,size,pos,material,{painted=false}={}){const m=new THREE.Mesh(shared.sphere,material);m.name=name;m.scale.set(...size);m.position.set(...pos);m.userData.paint=painted;group.add(m);return m}
 function wheel(group,x,z,r,width=.24,detail=1){const tire=new THREE.Mesh(wheelGeometry(r,width,detail?18:10),new THREE.MeshStandardMaterial({color:0x040506,roughness:.94}));tire.rotation.z=Math.PI/2;tire.position.set(x,r,z);group.add(tire);const rim=new THREE.Mesh(wheelGeometry(r*.58,width+.012,detail?14:8),new THREE.MeshStandardMaterial({color:0x252b31,metalness:.92,roughness:.17}));rim.rotation.z=Math.PI/2;rim.position.copy(tire.position);group.add(rim)}
@@ -60,9 +54,8 @@ export function createDetailedCar(vehicle,color=vehicle.color,detail=1){
   }else{
     box(g,'body',[w*.94,h*.36,l*.86],[0,r+h*.16,0],body,{painted:true});box(g,'cabin',[w*.72,h*.42,l*.46],[0,r+h*.50,-l*.04],window);box(g,'roof',[w*.66,.06,l*.38],[0,r+h*.72,-l*.05],body,{painted:true});if(vehicle.id==='metro_king')box(g,'taxiSign',[w*.28,.12,l*.12],[0,r+h*.86,-l*.08],light(0xffd632));
   }
-  const xs=type==='formula'?[-w*.46,w*.46]:[-wx,wx],zs=type==='formula'?[-l*.33,l*.33]:[-wz,wz];for(const x of xs)for(const z of zs)wheel(g,x,z,r,detail?.25:.20,detail);lights(g,w,h,l);return g;
+  const xs=type==='formula'?[-w*.46,w*.46]:[-wx,wx],zs=type==='formula'?[-l*.33,l*.33]:[-wz,wz];for(const x of xs)for(const z of zs)wheel(g,x,z,r,detail ? .25 : .20,detail);lights(g,w,h,l);return g;
 }
 
 export function morphDetailedCar(mesh,a,b,t){const base=mesh?.userData?.baseDimensions;if(!base)return;const da=designFor(a),db=designFor(b),ramZ=mesh.userData.ramVisualZ||1;mesh.scale.set(lerp(da.w,db.w,t)/base.w,lerp(da.h,db.h,t)/base.h,(lerp(da.l,db.l,t)/base.l)*ramZ);const c=new THREE.Color(a.color).lerp(new THREE.Color(b.color),t);mesh.traverse(o=>{if(o.userData?.paint&&o.material?.color)o.material.color.copy(c)})}
-
 export function disposeObject3D(root){if(!root)return;root.traverse(o=>{if(o.geometry&&!o.geometry.userData?.shared)o.geometry.dispose?.();if(o.material)(Array.isArray(o.material)?o.material:[o.material]).forEach(m=>m.dispose?.())})}
