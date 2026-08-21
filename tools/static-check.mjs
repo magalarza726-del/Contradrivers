@@ -49,9 +49,9 @@ if(!game.includes('.15*dt')||!game.includes('.055*dt'))fail('Heat de impacto/RAM
 if(!runtime.includes('contactLock=.42')||!runtime.includes('c.contactLock>0'))fail('No existe lock de contacto para colisiones de tráfico');else ok('Colisiones tienen cooldown por contacto');
 if(!runtime.includes('sameDirection=pf.dot(cf)>.35'))fail('Dirección relativa de tráfico no usa orientación real');else ok('Sentido de tráfico usa vectores de orientación');
 
-for(const token of ['airport-launch-ramp','cobalto-dock-ramp','sunset-stunt-ramp','vega-rail-ramp','gold-coast-ramp'])if(!features.includes(token))fail('Rampa ausente: '+token);
+for(const token of ['nova-launch-ramp','airport-launch-ramp','cobalto-dock-ramp','sunset-stunt-ramp','vega-rail-ramp','gold-coast-ramp'])if(!features.includes(token))fail('Rampa ausente: '+token);
 for(const token of ['nova-central-tunnel','airport-service-tunnel','gold-coast-tunnel'])if(!features.includes(token))fail('Túnel ausente: '+token);
-if(!features.includes("feature==='ramp'")||!features.includes("feature==='tunnel'"))fail('Features viales no distinguen rampas y túneles');else ok('5 rampas y 3 túneles definidos');
+if(!features.includes("feature==='ramp'")||!features.includes("feature==='tunnel'"))fail('Features viales no distinguen rampas y túneles');else ok('6 rampas y 3 túneles definidos');
 if(!runtime.includes('installWorldFeatures(blueprint)')||!runtime.includes('buildWorldFeatureGeometry(this,this.blueprint)'))fail('Renderer no instala/geometriza features v0.8.3');else ok('Rampas y túneles integrados al renderer');
 if(!runtime.includes('rampLaunchInfo')||!runtime.includes('this.airborne=true')||!runtime.includes('this.verticalVelocity-=9.81*simDt'))fail('Rampas no tienen física de salto balística');else ok('Rampas activan vuelo y gravedad');
 
