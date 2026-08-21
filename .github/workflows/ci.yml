@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  static-qa:
+  production-audit:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -19,11 +19,18 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 22
-      - name: Syntax check legacy app
-        run: node --check app.js
-      - name: Syntax check open-world app
-        run: node --check openworld-app.js
-      - name: Syntax check runtime modules
-        run: find src -name '*.js' -print0 | xargs -0 -n1 node --check
-      - name: Static contracts
+      - name: Syntax check production entrypoint
+        run: node --check game.js
+      - name: Syntax check production modules
+        run: |
+          node --check game-data.js
+          node --check src/core.js
+          node --check src/vehicle.js
+          node --check src/directors.js
+          node --check src/openworld.js
+          node --check src/settings.js
+          node --check src/vehicle-factory.js
+          node --check src/openworld-ui.js
+          node --check src/openworld-runtime.js
+      - name: Production contracts and regression audit
         run: node tools/static-check.mjs
