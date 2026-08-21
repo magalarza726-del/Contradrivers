@@ -11,6 +11,9 @@ const html=read('index.html');
 const game=read('game.js');
 const runtime=read('src/openworld-runtime.js');
 const world=read('src/openworld.js');
+const core=read('src/core.js');
+const vehicle=read('src/vehicle.js');
+const directors=read('src/directors.js');
 const settings=read('src/settings.js');
 const ui=read('src/openworld-ui.js');
 const factory=read('src/vehicle-factory.js');
@@ -19,7 +22,6 @@ const styles=read('styles-v082.css');
 const ids=[...html.matchAll(/id="([^"]+)"/g)].map(m=>m[1]);
 const duplicates=[...new Set(ids.filter((id,i)=>ids.indexOf(id)!==i))];
 if(duplicates.length)fail('HTML IDs duplicados: '+duplicates.join(', '));else ok('HTML IDs únicos');
-
 const requiredIds=['gameCanvas','menu','garage','guide','hud','speed','district','score','heat','health','minimap','rhythmLanes','pause','map','worldMap','fatal','policeToggle','pausePoliceToggle','policeStatus'];
 const missingIds=requiredIds.filter(id=>!ids.includes(id));
 if(missingIds.length)fail('IDs críticos ausentes: '+missingIds.join(', '));else ok('HUD, navegación y controles de policía presentes');
@@ -34,7 +36,6 @@ if(!settings.includes("BUILD_VERSION='0.8.2'"))fail('Versión de settings incons
 
 for(const token of ['extent=4000','I-85-ring','mountain-bypass','OpenWorldTraffic','ActivityDirector'])if(!world.includes(token))fail('Contrato de mundo abierto ausente: '+token);
 if(!process.exitCode)ok('Contratos principales del mundo abierto presentes');
-
 for(const token of ['new OpenWorldBlueprint()','new PlayerVehicle','new TrafficSystem','new PoliceSystem','drawWorldMap','chunkClock','hudClock','mapClock','crashed=true'])if(!game.includes(token))fail('Contrato de game.js ausente: '+token);
 if(!process.exitCode)ok('Loop, estados, throttling y crash-stop cubiertos');
 
@@ -48,12 +49,15 @@ if(!ui.includes('this.rhythmPool')||!ui.includes('while(this.rhythmPool.length<8
 if(!styles.includes('grayscale(.86)'))fail('Falta tratamiento visual gris de Time Control');else ok('Time Control visual auditado');
 if(!factory.includes('CAR_DESIGNS')||!factory.includes('createDetailedCar'))fail('Fábrica detallada de vehículos incompleta');else ok('Fábrica de 10 arquetipos de vehículos presente');
 if(!runtime.includes('for(let i=0;i<14;i++'))fail('Pool policial no soporta 14 unidades');else ok('Pool policial de 14 unidades presente');
+if(!core.includes("this.pad.ram=!!p.buttons[1]?.pressed"))fail('Mando no mapea RAM');else ok('Mando incluye RAM');
+if(!core.includes("document.addEventListener?.('visibilitychange'"))fail('Input no se limpia al ocultar pestaña');else ok('Input se limpia al perder visibilidad');
+if(!settings.includes('storageGet')||!settings.includes('storageSet'))fail('Settings no protege acceso a localStorage');else ok('Persistencia tolera storage restringido');
 
-const productionText=[game,runtime,settings,ui,factory].join('\n');
+const productionText=[game,runtime,world,core,vehicle,directors,settings,ui,factory].join('\n');
 for(const forbidden of ['openworld-upgrades.js','openworld-bootstrap.js','openworld-production.js'])if(productionText.includes(forbidden))fail('Producción depende de archivo intermedio: '+forbidden);
 if(!process.exitCode)ok('Producción desacoplada de monkey patches/intermedios');
 if(runtime.includes('.prototype.'))fail('Runtime final contiene monkey patches de prototype');else ok('Runtime final usa clases explícitas');
-if(/\?\.\d/.test(productionText))fail('Sintaxis ternaria ambigua del tipo ?.<número> detectada');else ok('Sin ternarios ambiguos auditados');
+if(/\?\.\d/.test(productionText))fail('Sintaxis ternaria ambigua del tipo ?.<número> detectada');else ok('Sin ternarios ambiguos en producción');
 
 function resolveImports(entry,visited=new Set()){
   if(visited.has(entry)||!exists(entry))return;visited.add(entry);
