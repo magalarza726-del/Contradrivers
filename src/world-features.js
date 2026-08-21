@@ -7,6 +7,7 @@ const RAMP_STYLE=Object.freeze({width:12,lanes:2,speed:28,color:0x555b60});
 const TUNNEL_STYLE=Object.freeze({width:18,lanes:2,speed:30,color:0x2f3438});
 
 const RAMP_DEFS=Object.freeze([
+  {id:'nova-launch-ramp',name:'Nova Launch',district:'downtown',points:[[250,-820,0],[330,-820,0],[390,-790,3],[450,-755,7],[510,-720,11]]},
   {id:'airport-launch-ramp',name:'Airport Launch',district:'airport',points:[[1880,-3480,0],[1970,-3480,0],[2040,-3480,2.5],[2100,-3480,6.5],[2160,-3480,11.5]]},
   {id:'cobalto-dock-ramp',name:'Cobalto Dock Jump',district:'harbor',points:[[-3450,-1710,0],[-3370,-1690,0],[-3300,-1670,3],[-3240,-1650,7],[-3185,-1632,10.5]]},
   {id:'sunset-stunt-ramp',name:'Sunset Stunt',district:'suburbs',points:[[2670,1170,0],[2740,1140,0],[2800,1110,2.8],[2860,1080,6.8],[2920,1050,10.2]]},
@@ -28,7 +29,7 @@ function makeRoad(def,feature){
     feature,
     featureName:def.name,
     points,
-    cls:feature==='ramp'?'service':'arterial',
+    cls:feature==='ramp'?'highway':'arterial',
     district:def.district,
     loop:false,
     width:style.width,
