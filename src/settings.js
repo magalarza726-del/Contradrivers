@@ -1,8 +1,8 @@
 import {clamp} from './core.js';
 
-export const BUILD_VERSION='0.8.2';
-const CURRENT_KEY='contradrivers:v0.8.2:settings';
-const LEGACY_KEYS=['contradrivers:v0.8.1:settings'];
+export const BUILD_VERSION='0.8.3';
+const CURRENT_KEY='contradrivers:v0.8.3:settings';
+const LEGACY_KEYS=['contradrivers:v0.8.2:settings','contradrivers:v0.8.1:settings'];
 const defaults=Object.freeze({policeEnabled:true,policeMax:14,uiScale:1});
 
 const storageGet=key=>{try{return localStorage.getItem(key)}catch{return null}};
