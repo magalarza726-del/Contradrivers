@@ -31,6 +31,7 @@ jobs:
           node --check src/settings.js
           node --check src/vehicle-factory.js
           node --check src/openworld-ui.js
+          node --check src/world-features.js
           node --check src/openworld-runtime.js
       - name: Production contracts and regression audit
         run: node tools/static-check.mjs
