@@ -57,7 +57,7 @@ const productionText=[game,runtime,world,core,vehicle,directors,settings,ui,fact
 for(const forbidden of ['openworld-upgrades.js','openworld-bootstrap.js','openworld-production.js'])if(productionText.includes(forbidden))fail('Producción depende de archivo intermedio: '+forbidden);
 if(!process.exitCode)ok('Producción desacoplada de monkey patches/intermedios');
 if(runtime.includes('.prototype.'))fail('Runtime final contiene monkey patches de prototype');else ok('Runtime final usa clases explícitas');
-if(/\?\.\d/.test(productionText))fail('Sintaxis ternaria ambigua del tipo ?.<número> detectada');else ok('Sin ternarios ambiguos en producción');
+if(/(?<!\?)\?\.\d/.test(productionText))fail('Sintaxis ternaria ambigua del tipo ?.<número> detectada');else ok('Sin ternarios ambiguos en producción');
 
 function resolveImports(entry,visited=new Set()){
   if(visited.has(entry)||!exists(entry))return;visited.add(entry);
